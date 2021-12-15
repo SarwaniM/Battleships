@@ -89,7 +89,23 @@ Parameters: 2D list of ints ; int
 Returns: 2D list of ints
 '''
 def addShips(grid, numShips):
-    return
+    def addShips(grid, numShips):
+    count=0
+    # return grid
+    for j in range(numShips):
+        ship = createShip()  
+        check =checkShip(grid,ship)
+        if check == True:
+            for i in range(3):
+             row=ship[i][0]
+             col=ship[i][1]
+            #  if grid [row][col]==2:
+            #      print ("over lap")
+             grid[row][col]=2
+             count=count+1
+            
+    return grid
+
 
 
 '''
