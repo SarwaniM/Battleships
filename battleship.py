@@ -33,16 +33,16 @@ def makeModel(data):
     data["num_ships"]= 5
 
     for i in range (2):
-        grid=emptyGrid(10, 10)
-        for j in range(5):
+        grid=emptyGrid(data["rows"], data["cols"])
+        for j in range(data["num_ships"]):
            ship=createShip()
            check=checkShip(grid,ship)
            if check==True:
               addShips(grid,1)
         if i==0:
-            data["board1"]=grid
+            data["userBoard"]=grid
         else:
-            data["board2"]=grid        
+            data["compBoard"]=grid        
     
     return data
 
