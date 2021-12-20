@@ -25,7 +25,26 @@ Parameters: dict mapping strs to values
 Returns: None
 '''
 def makeModel(data):
-    return
+    data["rows"]=10
+    data["cols"]=10
+    data["board_size"]=500
+    data["cell_size"]= (int)(data["board_size"]/( data["rows"]*data["cols"]))
+    data["num_ships"]= 5
+
+    for i in range (2):
+        grid=emptyGrid(data["rows"], data["cols"])
+        for j in range(data["num_ships"]):
+           ship=createShip()
+           check=checkShip(grid,ship)
+           if check==True:
+              addShips(grid,1)
+        if i==0:
+            data["userBoard"]=grid
+        else:
+            data["compBoard"]=grid        
+    
+    return data
+
 
 
 '''
@@ -34,15 +53,14 @@ Parameters: dict mapping strs to values ; Tkinter canvas ; Tkinter canvas
 Returns: None
 '''
 def makeView(data, userCanvas, compCanvas):
-    def makeView(data, userCanvas, compCanvas):
-    grid= drawGrid()
+    grid= test.testGrid()
     showShips = True
     for a in range(2):
        if a==0:
-          board=data["board1"]
+          #board=data["userBoard"]
           canvas=userCanvas
        else:
-          board=data["board2"]
+          #board=data["compBoard"]
           canvas=compCanvas
       
        drawGrid(data, canvas, grid, showShips)
@@ -76,7 +94,15 @@ Parameters: int ; int
 Returns: 2D list of ints
 '''
 def emptyGrid(rows, cols):
-    return
+    grid=[]
+    for i in range (rows):
+        col=[]
+        for j in range(cols):
+            col.append(1)
+        grid.append(col)    
+
+    return grid
+
 
 
 '''
@@ -85,7 +111,24 @@ Parameters: no parameters
 Returns: 2D list of ints
 '''
 def createShip():
-    return
+    import random
+    row = random.randint(1,8)
+    col = random.randint(1,8)
+    hv = random.randint(0,1)
+    if hv==0:
+      p=row-1
+      randomValue=col
+    else:
+      p=col-1
+      randomValue=row
+    d1=[[randomValue for j in range(1)] for i in range(3)]
+
+    for i in range(len(d1)):
+      d2=d1[i]
+ 
+      d2.insert(hv,p)
+      p=p+1
+    return d1
 
 
 '''
@@ -94,7 +137,21 @@ Parameters: 2D list of ints ; 2D list of ints
 Returns: bool
 '''
 def checkShip(grid, ship):
-    return
+    count=0
+    for i in range(3):
+        row=ship[i][0]
+        col=ship[i][1]
+        if grid[row][col]==1:
+        # print(True)
+           count=count+1
+    # else: print (False)
+    if count==3:
+        return True
+    # print("returning true")
+    else:
+        # print("returning false")
+       return False
+
 
 
 '''
@@ -103,7 +160,22 @@ Parameters: 2D list of ints ; int
 Returns: 2D list of ints
 '''
 def addShips(grid, numShips):
-    return
+
+    count=0
+    # return grid
+    for j in range(numShips):
+        ship = createShip()  
+        check =checkShip(grid,ship)
+        if check == True:
+            for i in range(3):
+             row=ship[i][0]
+             col=ship[i][1]
+            #  if grid [row][col]==2:
+            #      print ("over lap")
+             grid[row][col]=2
+             count=count+1
+            
+    return grid
 
 
 '''
@@ -112,12 +184,12 @@ Parameters: dict mapping strs to values ; Tkinter canvas ; 2D list of ints ; boo
 Returns: None
 '''
 def drawGrid(data, canvas, grid, showShips):
-      for i in range(10):
-        for j in range(10):
-            if grid[i][j]==2:
-               canvas.create_rectangle(j*50, i*50, (j+1)*50, (i+1)*50,fill="yellow")
+      for i in range(data["rows"]):
+        for j in range(data["cols"]):
+            if grid[i][j]==SHIP_UNCLICKED:
+               canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="yellow")
             else:
-               canvas.create_rectangle(j*50, i*50, (j+1)*50, (i+1)*50,fill="blue")    
+               canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="blue")   
       canvas.pack()
       return None
  
@@ -289,6 +361,7 @@ def runSimulation(w, h):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-
+   test.testDrawGrid()
+   test.testGrid()
     ## Finally, run the simulation to test it manually ##
-    # runSimulation(500, 500)
+   runSimulation(500, 500)
