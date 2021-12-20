@@ -25,7 +25,28 @@ Parameters: dict mapping strs to values
 Returns: None
 '''
 def makeModel(data):
-    return
+   
+    data["rows"]=10
+    data["cols"]=10
+    data["board_size"]=500
+    data["cell_size"]= 5
+    data["num_ships"]= 5
+
+    for i in range (2):
+        grid=emptyGrid(10, 10)
+        for j in range(5):
+           ship=createShip()
+           check=checkShip(grid,ship)
+           if check==True:
+              addShips(grid,1)
+        if i==0:
+            data["board1"]=grid
+        else:
+            data["board2"]=grid        
+    
+    return data
+
+
 
 
 '''
@@ -62,7 +83,9 @@ Parameters: int ; int
 Returns: 2D list of ints
 '''
 def emptyGrid(rows, cols):
-    return
+  
+    return 
+  
 
 
 '''
@@ -71,8 +94,10 @@ Parameters: no parameters
 Returns: 2D list of ints
 '''
 def createShip():
-    return
-
+   
+    
+    
+    return 
 
 '''
 checkShip(grid, ship)
@@ -80,7 +105,8 @@ Parameters: 2D list of ints ; 2D list of ints
 Returns: bool
 '''
 def checkShip(grid, ship):
-    return
+       return 
+
 
 
 '''
@@ -89,7 +115,10 @@ Parameters: 2D list of ints ; int
 Returns: 2D list of ints
 '''
 def addShips(grid, numShips):
-    return
+   
+    return 
+
+ 
 
 
 '''
@@ -268,6 +297,10 @@ def runSimulation(w, h):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
+    test.testEmptyGrid()
+    test.testCreateShip()
+    test.testCheckShip()
+    test.testAddShips()
 
     ## Finally, run the simulation to test it manually ##
     # runSimulation(500, 500)
