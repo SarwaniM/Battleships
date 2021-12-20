@@ -34,7 +34,21 @@ Parameters: dict mapping strs to values ; Tkinter canvas ; Tkinter canvas
 Returns: None
 '''
 def makeView(data, userCanvas, compCanvas):
-    return
+    def makeView(data, userCanvas, compCanvas):
+    grid= drawGrid()
+    showShips = True
+    for a in range(2):
+       if a==0:
+          board=data["board1"]
+          canvas=userCanvas
+       else:
+          board=data["board2"]
+          canvas=compCanvas
+      
+       drawGrid(data, canvas, grid, showShips)
+       
+
+    return None
 
 
 '''
@@ -98,9 +112,16 @@ Parameters: dict mapping strs to values ; Tkinter canvas ; 2D list of ints ; boo
 Returns: None
 '''
 def drawGrid(data, canvas, grid, showShips):
-    return
-
-
+      for i in range(10):
+        for j in range(10):
+            if grid[i][j]==2:
+               canvas.create_rectangle(j*50, i*50, (j+1)*50, (i+1)*50,fill="yellow")
+            else:
+               canvas.create_rectangle(j*50, i*50, (j+1)*50, (i+1)*50,fill="blue")    
+      canvas.pack()
+      return None
+ 
+    
 ### WEEK 2 ###
 
 '''
