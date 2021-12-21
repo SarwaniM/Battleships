@@ -30,21 +30,12 @@ def makeModel(data):
     data["board_size"]=500
     data["cell_size"]= (int)(data["board_size"]/( data["rows"]*data["cols"]))
     data["num_ships"]= 5
-
-    for i in range (2):
-        grid=emptyGrid(data["rows"], data["cols"])
-        for j in range(data["num_ships"]):
-           ship=createShip()
-           check=checkShip(grid,ship)
-           if check==True:
-              addShips(grid,1)
-        if i==0:
-            data["userBoard"]=grid
-        else:
-            data["compBoard"]=grid        
     
+    temp=emptyGrid(data["rows"],data["cols"])
+    data["userboard"]=test.testGrid()
+    data["compboard"]=addShips(temp,data["num_ships"])
     return data
-
+  
 
 
 '''
@@ -53,19 +44,10 @@ Parameters: dict mapping strs to values ; Tkinter canvas ; Tkinter canvas
 Returns: None
 '''
 def makeView(data, userCanvas, compCanvas):
-    grid= test.testGrid()
+    
     showShips = True
-    for a in range(2):
-       if a==0:
-          #board=data["userBoard"]
-          canvas=userCanvas
-       else:
-          #board=data["compBoard"]
-          canvas=compCanvas
-      
-       drawGrid(data, canvas, grid, showShips)
-       
-
+    drawGrid(data, compCanvas,data["compboard"] ,showShips)
+    drawGrid(data, userCanvas,data["userboard"],showShips)
     return None
 
 
@@ -98,7 +80,7 @@ def emptyGrid(rows, cols):
     for i in range (rows):
         col=[]
         for j in range(cols):
-            col.append(1)
+            col.append(EMPTY_UNCLICKED)
         grid.append(col)    
 
     return grid
@@ -138,18 +120,17 @@ Returns: bool
 '''
 def checkShip(grid, ship):
     count=0
-    for i in range(3):
+    for i in range(len(ship)):
         row=ship[i][0]
         col=ship[i][1]
-        if grid[row][col]==1:
+        if grid[row][col]==EMPTY_UNCLICKED:
         # print(True)
            count=count+1
     # else: print (False)
-    if count==3:
+    if count==len(ship):
         return True
-    # print("returning true")
+    
     else:
-        # print("returning false")
        return False
 
 
@@ -161,19 +142,25 @@ Returns: 2D list of ints
 '''
 def addShips(grid, numShips):
 
+    # for j in range(numShips):
+    #     ship = createShip()  
+    #     check =checkShip(grid,ship)
+    #     if check == True:
+    #         for i in range(len(ships)):
+    #          row=ships[i][0]
+    #          col=ships[i][1]
+    #          grid[row][col]=SHIP_UNCLICKED 
     count=0
-    # return grid
-    for j in range(numShips):
+    while count < numShips:
         ship = createShip()  
         check =checkShip(grid,ship)
-        if check == True:
-            for i in range(3):
-             row=ship[i][0]
-             col=ship[i][1]
-            #  if grid [row][col]==2:
-            #      print ("over lap")
-             grid[row][col]=2
-             count=count+1
+        if check :
+            for i in ship:
+               row=i[0]
+               col=i[1]
+               grid[row][col]=SHIP_UNCLICKED
+            count=count+1
+      
             
     return grid
 
@@ -361,7 +348,14 @@ def runSimulation(w, h):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-   test.testDrawGrid()
-   test.testGrid()
+    # test.testEmptyGrid()
+    # test.testCheckShip()
+    # test.testCreateShip()
+    test.testAddShips()
+    test.testMakeModel()
+    test.testDrawGrid()
+    test.testGrid()
+   
+
     ## Finally, run the simulation to test it manually ##
-   runSimulation(500, 500)
+    runSimulation(500, 500)
