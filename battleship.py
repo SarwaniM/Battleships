@@ -189,7 +189,31 @@ Parameters: 2D list of ints
 Returns: bool
 '''
 def isVertical(ship):
-    return
+    row=[]
+    col=[]
+    for i in range(len(ship)):
+        row.append(ship[i][0])
+        col.append(ship[i][1])
+    count=0
+    truecount=0
+    c=col[0]
+    for i in range(1,len(ship)):
+        if(c==col[i]):
+           count=count+1
+    if count==len(ship)-1:
+       truecount=truecount+1  
+ 
+    row.sort()
+    count=0
+    for i in range (len(ship)-1):
+        if (row[i]+1==row[i+1]):
+          count=count+1
+    if (count==len(ship)-1):
+        truecount=truecount+1  
+    if truecount==2:
+        return True
+    else:
+        return False
 
 
 '''
@@ -198,7 +222,31 @@ Parameters: 2D list of ints
 Returns: bool
 '''
 def isHorizontal(ship):
-    return
+    row=[]
+    col=[]
+    for i in range(len(ship)):
+        row.append(ship[i][0])
+        col.append(ship[i][1])
+    count=0
+    truecount=0
+    r=row[0]
+    for i in range(1,len(ship)):
+        if(r==row[i]):
+           count=count+1
+    if count==len(ship)-1:
+       truecount=truecount+1  
+ 
+    col.sort()
+    count=0
+    for i in range (len(ship)-1):
+        if (col[i]+1==col[i+1]):
+          count=count+1
+    if (count==len(ship)-1):
+        truecount=truecount+1  
+    if truecount==2:
+        return True
+    else:
+        return False   
 
 
 '''
