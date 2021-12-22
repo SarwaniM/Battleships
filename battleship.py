@@ -31,6 +31,7 @@ def makeModel(data):
     data["cell_size"]= (int)(data["board_size"]/( data["rows"]*data["cols"]))
     data["num_ships"]= 5
     data["tempShip"]=test.testShip()
+    data["userShips"]=0
     
     temp=emptyGrid(data["rows"],data["cols"])
     data["userboard"]=test.testGrid()
@@ -292,7 +293,22 @@ Parameters: 2D list of ints ; 2D list of ints
 Returns: bool
 '''
 def shipIsValid(grid, ship):
-    return
+    if(len(ship)==3):
+        flag=flag+1
+    
+    if(checkShip(grid,ship)&((isHorizontal(ship))|(isVertical(ship))==True)):
+        flag=flag+1
+ 
+    for i in range (len(ship)):
+      row=ship[i][0]
+      col=ship[i][1]
+      if(grid[row][col]!=SHIP_UNCLICKED):
+           count=count+1
+    if (count==len(ship)):
+        flag=flag+1
+    if(flag==3):
+        return True
+    return False
 
 
 '''
@@ -301,7 +317,17 @@ Parameters: dict mapping strs to values
 Returns: None
 '''
 def placeShip(data):
-    return
+    if(shipIsValid(data["userboard"],data["tempShip"])):
+        for i in range (len(data["tempShip"])):
+           row=data["tempShip"][i][0]
+           col=data["tempShip"][i][1]
+           data["userboard"][row][col]=SHIP_UNCLICKED
+        data["userShips"]=data["userShips"]+1
+    data["tempShip"]=[]
+   
+   # print(data["userShips"])
+ 
+    return None
 
 
 '''
@@ -310,7 +336,30 @@ Parameters: dict mapping strs to values ; int ; int
 Returns: None
 '''
 def clickUserBoard(data, row, col):
-    return
+   def clickUserBoard(data, row, col):
+    if(data["userShips"]==5):
+        return None
+ 
+    i=(int)(col/(data["cols"]*data["cell_size"]))
+    j=(int)(row/(data["rows"]*data["cell_size"]))
+    t=[i,j]
+    for k in range(len(data["tempShip"])):
+      if (data["tempShip"][k]==t):
+           return None
+   # if(len(data["tempShip"])<=3):
+    data["tempShip"].append(t)
+ 
+    if(len(data["tempShip"])==3):
+        #print(data["tempShip"])
+        placeShip(data)
+       # print(data["userShips"])
+       
+       
+    if(data["userShips"]==5):
+        print("you can start the game")
+        data.update({data["userShips"]:0})
+    return None
+
 
 
 ### WEEK 3 ###
