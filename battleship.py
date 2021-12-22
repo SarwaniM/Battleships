@@ -30,9 +30,10 @@ def makeModel(data):
     data["board_size"]=500
     data["cell_size"]= (int)(data["board_size"]/( data["rows"]*data["cols"]))
     data["num_ships"]= 5
-    data["tempShip"]=test.testShip()
+    data["tempShip"]=[]
+    data["userShips"]=0
     
-    temp=emptyGrid(data["rows"],data["cols"])
+    temp= emptyGrid(data["rows"],data["cols"])
     data["userboard"]=emptyGrid(data["rows"], data["cols"])
     data["compboard"]=addShips(temp,data["num_ships"])
     return data
@@ -68,7 +69,11 @@ Parameters: dict mapping strs to values ; mouse event object ; 2D list of ints
 Returns: None
 '''
 def mousePressed(data, event, board):
-    pass
+    rc = getClickedCell(data, event)
+    row= rc[1]*data["cols"]*data["cell_size"]
+    col=rc[0]*data["rows"]*data["cell_size"]
+    if(board=="user"):
+        clickUserBoard(data, row, col)
 
 #### WEEK 1 ####
 
@@ -292,6 +297,7 @@ Parameters: 2D list of ints ; 2D list of ints
 Returns: bool
 '''
 def shipIsValid(grid, ship):
+    count=flag=0
     if(len(ship)==3):
         flag=flag+1
     
@@ -335,7 +341,6 @@ Parameters: dict mapping strs to values ; int ; int
 Returns: None
 '''
 def clickUserBoard(data, row, col):
-   def clickUserBoard(data, row, col):
     if(data["userShips"]==5):
         return None
  
