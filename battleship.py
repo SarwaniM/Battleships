@@ -31,10 +31,9 @@ def makeModel(data):
     data["cell_size"]= (int)(data["board_size"]/( data["rows"]*data["cols"]))
     data["num_ships"]= 5
     data["tempShip"]=test.testShip()
-    data["userShips"]=0
     
     temp=emptyGrid(data["rows"],data["cols"])
-    data["userboard"]=test.testGrid()
+    data["userboard"]=emptyGrid(data["rows"], data["cols"])
     data["compboard"]=addShips(temp,data["num_ships"])
     return data
   
