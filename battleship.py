@@ -402,7 +402,8 @@ def runGameTurn(data, row, col):
       return  None
     else:
         updateBoard(data, "compboard", row, col, "user")
-
+    [r,c]=getComputerGuess(data["compboard"])
+    updateBoard(data, "compboard", r, c, "comp")
 
 '''
 getComputerGuess(board)
@@ -410,7 +411,12 @@ Parameters: 2D list of ints
 Returns: list of ints
 '''
 def getComputerGuess(board):
-    return
+    randomrowvalue = random.randint(1,8)
+    randomcolvalue = random.randint(1,8)
+    while (board[randomrowvalue][randomcolvalue] == SHIP_CLICKED or board[randomrowvalue][randomcolvalue]==EMPTY_CLICKED):
+        randomrowvalue = random.randint(1,8)
+        randomcolvalue = random.randint(1,8)  
+    return [randomrowvalue,randomcolvalue]
 
 
 '''
