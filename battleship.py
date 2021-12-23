@@ -32,6 +32,7 @@ def makeModel(data):
     data["num_ships"]= 5
     data["tempShip"]=[]
     data["userShips"]=0
+    data["winner"]=None
     
     temp= emptyGrid(data["rows"],data["cols"])
     data["userboard"]=emptyGrid(data["rows"], data["cols"])
@@ -51,6 +52,8 @@ def makeView(data, userCanvas, compCanvas):
     drawGrid(data, compCanvas,data["compboard"] ,False)
     drawGrid(data, userCanvas,data["userboard"],True)
     drawShip(data, userCanvas,data["tempShip"])
+    drawGameOver(data,userCanvas)
+    drawGameOver(data,compCanvas)
     return None
 
 
@@ -69,11 +72,14 @@ Parameters: dict mapping strs to values ; mouse event object ; 2D list of ints
 Returns: None
 '''
 def mousePressed(data, event, board):
+    if(data["winner"]!=None):
+        return None
     rc = getClickedCell(data, event)
     if(board=="user"):
         clickUserBoard(data, rc[0], rc[1])
     else:
          runGameTurn(data, rc[0], rc[1])
+    
 #### WEEK 1 ####
 
 '''
@@ -184,14 +190,13 @@ def drawGrid(data, canvas, grid, showShips):
                    canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="yellow")
                 else: canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="blue")
             elif (grid[i][j]==SHIP_CLICKED):
-                if(showShips):
+                #if(showShips):
                    canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="red")
-                else: canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="blue")
+                #else: canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="blue")
             elif (grid[i][j]==EMPTY_CLICKED):
-                if(showShips):
+                #if(showShips):
                    canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="white")
-                else: canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="blue")    
-
+                #else: canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="blue")    
             else:
                canvas.create_rectangle(j*data["cols"]*data["cell_size"], i*data["rows"]*data["cell_size"], (j+1)*data["cols"]*data["cell_size"], (i+1)*data["rows"]*data["cell_size"],fill="blue")  
     canvas.pack()
@@ -382,8 +387,8 @@ def updateBoard(data, board, row, col, player):
       
     if (board[row][col]==EMPTY_UNCLICKED):
         board[row][col]=EMPTY_CLICKED
-
-
+    if(isGameOver(board)==True):
+        data["winner"]=player
 
 '''
 runGameTurn(data, row, col)
@@ -432,7 +437,7 @@ Returns: None
 '''
 def drawGameOver(data, canvas):
     if (data["winner"]=="user"):
-        canvas.create_text(300, 50, text="Congratulations", fill="black", font=('Helvetica 15 bold'))
+        canvas.create_text(300, 50, text="Congratulations!!", fill="black", font=('Helvetica 15 bold'))
  
     if (data["winner"]=="comp"):
         canvas.create_text(300, 50, text=" YOU LOSE ", fill="black", font=('Helvetica 15 bold'))  
