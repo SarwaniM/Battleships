@@ -65,7 +65,10 @@ Parameters: dict mapping strs to values ; key event object
 Returns: None
 '''
 def keyPressed(data, event):
-    pass
+    if  event.keysym == 'Return':
+      makeModel(data)
+      return False 
+
 
 
 '''
@@ -353,7 +356,7 @@ Parameters: dict mapping strs to values ; int ; int
 Returns: None
 '''
 def clickUserBoard(data, row, col):
-    if(data["userShips"]==5):
+    if(data["userShips"]==data["num_ships"]):
         return None
  
     t=[row,col]
@@ -369,7 +372,7 @@ def clickUserBoard(data, row, col):
        # print(data["userShips"])
        
        
-    if(data["userShips"]==5):
+    if(data["userShips"]==data["num_ships"]):
         print("you can start the game")
         data.update({data["userShips"]:0})
     return None
@@ -442,11 +445,13 @@ Returns: None
 def drawGameOver(data, canvas):
     if (data["winner"]=="user"):
         canvas.create_text(300, 50, text="Congratulations!!", fill="black", font=('Helvetica 15 bold'))
- 
+        canvas.create_text(200, 100, text="press enter to replay", fill="black", font=('Helvetica 15 bold'))
     if (data["winner"]=="comp"):
         canvas.create_text(300, 50, text=" YOU LOSE ", fill="black", font=('Helvetica 15 bold'))
+        canvas.create_text(200, 100, text="press enter to replay", fill="black", font=('Helvetica 15 bold'))
     if (data["winner"]=="draw"):
-        canvas.create_text(300, 50, text="You are out of moves!", fill="black", font=('Helvetica 15 bold'))  
+        canvas.create_text(300, 50, text="You are out of moves!", fill="black", font=('Helvetica 15 bold'))
+        canvas.create_text(200, 100, text="press enter to replay", fill="black", font=('Helvetica 15 bold'))
     canvas.pack()
     return
 
