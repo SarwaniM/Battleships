@@ -337,6 +337,8 @@ Parameters: dict mapping strs to values
 Returns: None
 '''
 def placeShip(data):
+    if( data["userShips"]==data["num_ships"]):
+        return None
     if(shipIsValid(data["userboard"],data["tempShip"])):
         for i in range (len(data["tempShip"])):
            row=data["tempShip"][i][0]
@@ -345,7 +347,7 @@ def placeShip(data):
         data["userShips"]=data["userShips"]+1
     data["tempShip"]=[]
    
-   # print(data["userShips"])
+    print(data["userShips"])
  
     return None
 
@@ -357,7 +359,7 @@ Returns: None
 '''
 def clickUserBoard(data, row, col):
     if(data["userShips"]==data["num_ships"]):
-        return None
+       return None
  
     t=[row,col]
     for k in range(len(data["tempShip"])):
@@ -374,7 +376,7 @@ def clickUserBoard(data, row, col):
        
     if(data["userShips"]==data["num_ships"]):
         print("you can start the game")
-        data["userShips"]=0
+        #data["userShips"]=0
     return None
 
 
@@ -444,14 +446,14 @@ Returns: None
 '''
 def drawGameOver(data, canvas):
     if (data["winner"]=="user"):
-        canvas.create_text(300, 50, text="Congratulations!!", fill="black", font=('Helvetica 15 bold'))
-        canvas.create_text(200, 100, text="press enter to replay", fill="black", font=('Helvetica 15 bold'))
+        canvas.create_text(250, 150, text="Congratulations!!", fill="gold", font=('Times 24 bold'))
+        canvas.create_text(250, 250, text="press enter to replay", fill="black", font=('Times 16 bold'))
     if (data["winner"]=="comp"):
-        canvas.create_text(300, 50, text=" YOU LOSE ", fill="black", font=('Helvetica 15 bold'))
-        canvas.create_text(200, 100, text="press enter to replay", fill="black", font=('Helvetica 15 bold'))
+        canvas.create_text(250, 150, text=" YOU LOSE ", fill="brown", font=('Times 24 bold'))
+        canvas.create_text(250, 250, text="press enter to replay", fill="black", font=('Times 16 bold'))
     if (data["winner"]=="draw"):
-        canvas.create_text(300, 50, text="You are out of moves!", fill="black", font=('Helvetica 15 bold'))
-        canvas.create_text(200, 100, text="press enter to replay", fill="black", font=('Helvetica 15 bold'))
+        canvas.create_text(250, 150, text="You are out of moves!", fill="orange", font=('Times 24 bold'))
+        canvas.create_text(250, 250, text="press enter to replay", fill="black", font=('Times 16 bold'))
     canvas.pack()
     return
 
