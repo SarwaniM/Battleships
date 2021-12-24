@@ -409,11 +409,11 @@ Parameters: 2D list of ints
 Returns: list of ints
 '''
 def getComputerGuess(board):
-    randomrowvalue = random.randint(1,8)
-    randomcolvalue = random.randint(1,8)
+    randomrowvalue = random.randint(0,9)
+    randomcolvalue = random.randint(0,9)
     while (board[randomrowvalue][randomcolvalue] == SHIP_CLICKED or board[randomrowvalue][randomcolvalue]==EMPTY_CLICKED):
-        randomrowvalue = random.randint(1,8)
-        randomcolvalue = random.randint(1,8)  
+        randomrowvalue = random.randint(0,9)
+        randomcolvalue = random.randint(0,9)  
     return [randomrowvalue,randomcolvalue]
 
 
