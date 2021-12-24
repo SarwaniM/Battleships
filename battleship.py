@@ -389,7 +389,7 @@ def updateBoard(data, board, row, col, player):
       
     if (board[row][col]==EMPTY_UNCLICKED):
         board[row][col]=EMPTY_CLICKED
-    if(isGameOver(board)==True):
+    if(isGameOver(board) ==True):
         data["winner"]=player
 
 '''
@@ -413,11 +413,11 @@ Parameters: 2D list of ints
 Returns: list of ints
 '''
 def getComputerGuess(board):
-    randomrowvalue = random.randint(1,8)
-    randomcolvalue = random.randint(1,8)
+    randomrowvalue = random.randint(0,9)
+    randomcolvalue = random.randint(0,9)
     while (board[randomrowvalue][randomcolvalue] == SHIP_CLICKED or board[randomrowvalue][randomcolvalue]==EMPTY_CLICKED):
-        randomrowvalue = random.randint(1,8)
-        randomcolvalue = random.randint(1,8)  
+        randomrowvalue = random.randint(0,9)
+        randomcolvalue = random.randint(0,9)  
     return [randomrowvalue,randomcolvalue]
 
 
