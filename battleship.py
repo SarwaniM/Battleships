@@ -282,12 +282,12 @@ Parameters: dict mapping strs to values ; mouse event object
 Returns: list of ints
 '''
 def getClickedCell(data, event):
-    l=[]
+   # l=[]
     i=(int)(event.y/(data["cols"]*data["cell_size"]))
     j=(int)(event.x/(data["rows"]*data["cell_size"]))
-    l.append(i)
-    l.append(j)
-    return l
+    #l.append(i)
+    #l.append(j)
+    return [i,j]
 
 
 '''
@@ -337,8 +337,8 @@ Parameters: dict mapping strs to values
 Returns: None
 '''
 def placeShip(data):
-    if( data["userShips"]==data["num_ships"]):
-        return None
+    #if( data["userShips"]==data["num_ships"]):
+    #    return None
     if(shipIsValid(data["userboard"],data["tempShip"])):
         for i in range (len(data["tempShip"])):
            row=data["tempShip"][i][0]
@@ -347,7 +347,7 @@ def placeShip(data):
         data["userShips"]=data["userShips"]+1
     data["tempShip"]=[]
    
-    print(data["userShips"])
+   # print(data["userShips"])
  
     return None
 
@@ -361,12 +361,11 @@ def clickUserBoard(data, row, col):
     if(data["userShips"]==data["num_ships"]):
        return None
  
-    t=[row,col]
     for k in range(len(data["tempShip"])):
-      if (data["tempShip"][k]==t):
+      if (data["tempShip"][k]==[row,col]):
            return None
    # if(len(data["tempShip"])<=3):
-    data["tempShip"].append(t)
+    data["tempShip"].append([row,col])
  
     if(len(data["tempShip"])==3):
         #print(data["tempShip"])
