@@ -272,12 +272,10 @@ Parameters: dict mapping strs to values ; mouse event object
 Returns: list of ints
 '''
 def getClickedCell(data, event):
-    l=[]
+    
     i=(int)(event.y/(data["cols"]*data["cell_size"]))
     j=(int)(event.x/(data["rows"]*data["cell_size"]))
-    l.append(i)
-    l.append(j)
-    return l
+    return [i,j]
 
 
 '''
@@ -351,12 +349,11 @@ Returns: None
 def clickUserBoard(data, row, col):
     if(data["userShips"]==5):
         return None
-    t=[row,col]
     for k in range(len(data["tempShip"])):
-      if (data["tempShip"][k]==t):
+      if (data["tempShip"][k]==[row,col]):
            return None
    # if(len(data["tempShip"])<=3):
-    data["tempShip"].append(t)
+    data["tempShip"].append([row,col])
  
     if(len(data["tempShip"])==3):
         #print(data["tempShip"])
